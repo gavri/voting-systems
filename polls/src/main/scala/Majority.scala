@@ -11,3 +11,6 @@ class Majority(candidates: List[Candidate]) extends Election {
   def winners: Set[Candidate] = Set(winner).flatten
 }
 
+object Majority {
+  def apply(candidates: List[Candidate]) = new Majority(candidates)
+}
