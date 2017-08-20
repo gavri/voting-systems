@@ -21,6 +21,11 @@ class Tally(candidates: List[Candidate]) {
     case Some(n) => Some(breakdown.find { case(_, numberOfVotes) => numberOfVotes == n}.get._1)
     case None => None
   }
+
+  def mostBottomRankedCandidate: Option[Candidate] = maximumNumberOfVotes match {
+    case Some(n) => Some(breakdown.find { case(_, numberOfVotes) => numberOfVotes == n}.get._1)
+    case None => None
+  }
 }
 
 object Tally {
