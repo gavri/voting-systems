@@ -3,9 +3,17 @@ package com.example.gavri.polls
 class InstantRunoff(ballotSheets: List[BallotSheet]) extends Election {
   def winner: Option[Candidate] = {
     val multiTally = MultiTally(ballotSheets)
-    val iterator = Iterator.iterate(Some(multiTally): Option[MultiTally]) { smt => smt.flatMap {mt => mt.withoutLeastTopRankedCandidate }}
-    val winner = iterator.takeWhile{case Some(mt) => !mt.isEmpty; case None => false}.flatMap{smt => smt.map {mt => Majority(mt.topRankedCandidates)}}.flatMap(_.winner).toList.headOption
-    winner
+    val iterator = Iterator.iterate(Some(multiTally): Option[MultiTally]) {
+      for {
+        mt <- _
+        mt <- mt.withoutLeastTopRankedCandidate
+      } yield mt
+    }
+    val winnerIterator = for {
+      mt <- iterator.flatten.takeWhile(!_.isEmpty)
+      winner <- Majority(mt.topRankedCandidates).winner
+    } yield winner
+    winnerIterator.find(_ => true)
   }
 
   def winners: Set[Candidate] = winner.toSet

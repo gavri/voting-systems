@@ -24,5 +24,10 @@ class InstantRunoffSpec extends FunSpec with Matchers with Factory {
       val instantRunoff = InstantRunoff(deciderVote +: otherVotes)
       instantRunoff.winners should equal (Set(Candidate("second")))
     }
+
+    it("should return an empty set if nobody voted") {
+      val instantRunoff = InstantRunoff(List())
+      instantRunoff.winners should equal (Set())
+    }
   }
 }
