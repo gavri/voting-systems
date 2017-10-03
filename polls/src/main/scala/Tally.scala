@@ -17,11 +17,11 @@ class Tally(candidates: List[Candidate]) {
     filtered.keys.toList
   }
 
-  def leastTopRankedCandidate: Option[Candidate] = minimumNumberOfVotes map { n =>
+  def candidateWithLeastVotes: Option[Candidate] = minimumNumberOfVotes map { n =>
     breakdown.find { case(_, numberOfVotes) => numberOfVotes == n}.get._1
   }
 
-  def mostBottomRankedCandidate: Option[Candidate] = maximumNumberOfVotes map { n =>
+  def candidateWithMostVotes: Option[Candidate] = maximumNumberOfVotes map { n =>
     breakdown.find { case(_, numberOfVotes) => numberOfVotes == n}.get._1
   }
 }

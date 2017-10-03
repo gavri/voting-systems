@@ -12,8 +12,8 @@ class MultiTally(ballotSheets: List[BallotSheet]) {
     MultiTally(ballotSheets.map { ballotSheet => ballotSheet.withoutCandidate(c) })
   }
 
-  def leastTopRankedCandidate = Tally(topRankedCandidates).leastTopRankedCandidate
-  def mostBottomRankedCandidate = Tally(bottomRankedCandidates).leastTopRankedCandidate
+  private def leastTopRankedCandidate = Tally(topRankedCandidates).candidateWithLeastVotes
+  private def mostBottomRankedCandidate = Tally(bottomRankedCandidates).candidateWithMostVotes
 
   def isEmpty = ballotSheets.forall(_.isEmpty)
 }
